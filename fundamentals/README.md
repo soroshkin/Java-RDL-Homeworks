@@ -15,17 +15,20 @@ _Notice that result text contains comma and sometimes exclamation mark._
 
 ## Exploring Java Objects
 
-1. Try to execute: `javac src/io/humb1t/Main2.java`.
+1. Try to execute: `javac src/io/humb1t/example/Main2.java`.
 1. Check the CLI output - read the error, why do you think it happened?
-1. Execute: `javac src/io/humb1t/*.java`.
-1. Check that new files `Main2.class` and `Order.class` were created in `src/io/humb1t`.
-1. Execute: `java -cp ./src io.humb1t.Main2`. You can find more information about Java applications runner's
+1. Execute: `javac src/io/humb1t/example/*.java`.
+1. Check that new files `Main2.class` and other were created in `src/io/humb1t/example`.
+1. Execute: `java -cp ./src io.humb1t.example.Main2 java`. You can find more information about Java applications runner's
 command line arguments [here](https://docs.oracle.com/javase/7/docs/technotes/tools/windows/java.html).
 `-cp` is short version of `-classpath` and it _specifies a list of directories, JAR files, 
-and ZIP archives to search for class files._ Because we are using dependency from `Main2` to `Order` - we should
+and ZIP archives to search for class files._ Because we are using dependency from `Main2` to `Language` - we should
 provide a path for dependencies' `*.class` files.
-1. Check the CLI output - read lines one by one and learn more about objects 
-[initialization](https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html).
+1. Check the CLI output - try another arguments as inputs.
+1. Using this application as example create your own application about pets. Every animal should produce its own sound
+and make different actions. Your application should take first argument as a name of pet and print its description.
+For example, cat says 'meow' and catch mice. Dog says 'woof' and protect house. Hedgehog says 'frr' and catch mice. Etc.
+1. Optional. Build your application as one jar file
 
 ## 
 
