@@ -30,5 +30,8 @@ and make different actions. Your application should take first argument as a nam
 For example, cat says 'meow' and catch mice. Dog says 'woof' and protect house. Hedgehog says 'frr' and catch mice. Etc.
 1. Optional. Build your application as one jar file
 
+## Exploring Generics
+1. Compare implementation in 'generics' folder with 'example'
+
 ## 
 
