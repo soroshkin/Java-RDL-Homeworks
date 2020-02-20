@@ -1,27 +1,25 @@
 package io.humb1t.generics;
 
 public class Main3 {
-    public static void main(String[] args) throws Exception {
-        printLanguageDescription(getLanguageByName(args[0]));
+    public static void main(String[] args) {
+        Language language = getLanguageByName(args[0]);
+        System.out.println(language.getDescription());
+        System.out.println(language.toString());
     }
 
-    private static Language getLanguageByName(String name) throws Exception {
+    private static Language getLanguageByName(String name) {
         switch (name.toLowerCase()) {
             case "java":
-                return new Language("Java", OOP.class, StrongTyped.class);
+                return new Language("Java", () -> "OOP", () -> "strongly-typed");
             case "js":
             case "javascript":
-                return new Language("JavaScript", MultiParadigm.class, DynamicTyped.class);
+                return new Language("JavaScript", () -> "Multi-paradigm", () -> "dynamically-ped");
             case "python":
-                return new Language("Python", MultiParadigm.class, DynamicTyped.class);
+                return new Language("Python", () -> "Multi-paradigm", () -> "dynamically-typed");
             case "haskell":
-                return new Language("Haskell", Functional.class, StrongTyped.class);
+                return new Language("Haskell",() -> "Functional", () -> "strongly-typed");
             default:
-                return new Language(name, Unknown.class, Unknown.class);
+                return new Language(name, new Unknown(), new Unknown());
         }
-    }
-
-    private static void printLanguageDescription(Language language) {
-        System.out.println(language.getDescription());
     }
 }
