@@ -1,4 +1,4 @@
-package io.humb1t.example;
+package org.fundamentals.example;
 
 public class HaskellLanguage extends Language implements Functional, StrongTyped {
     @Override

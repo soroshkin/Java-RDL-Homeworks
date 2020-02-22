@@ -4,22 +4,22 @@
 
 1. Install [JDK](https://openjdk.java.net/).
 1. Open [command-line interface](https://en.wikipedia.org/wiki/Command-line_interface#Operating_system_command-line_interfaces).
-1. Execute: `javac src/io/humb1t/Main.java`. You can find more information about Java programming language compiler 
+1. Execute: `javac src/org/fundamentals/Main.java`. You can find more information about Java programming language compiler
 [here](https://docs.oracle.com/javase/7/docs/technotes/tools/windows/javac.html).
-1. Check that a new file named `Main.class` was created in `src/io/humb1t`.
+1. Check that a new file named `Main.class` was created in `src/org/fundamentals`.
 1. Open the file, it is a [byte code](https://en.wikipedia.org/wiki/Java_bytecode).
-1. Execute: `java src/io/humb1t/Main.java`. You can find more information about Java applications runner 
+1. Execute: `java src/org/fundamentals/Main.java`. You can find more information about Java applications runner
 [here](https://docs.oracle.com/javase/7/docs/technotes/tools/windows/java.html).
 1. Check the CLI (Command-line interface) output - it should be `Hello, World!`. 
 _Notice that result text contains comma and sometimes exclamation mark._
 
 ## Exploring Java Objects
 
-1. Try to execute: `javac src/io/humb1t/example/Main2.java`.
+1. Try to execute: `javac src/org/fundamentals/example/Main2.java`.
 1. Check the CLI output - read the error, why do you think it happened?
-1. Execute: `javac src/io/humb1t/example/*.java`.
-1. Check that new files `Main2.class` and other were created in `src/io/humb1t/example`.
-1. Execute: `java -cp ./src io.humb1t.example.Main2 java`. You can find more information about Java applications runner's
+1. Execute: `javac src/org/fundamentals/example/*.java`.
+1. Check that new files `Main2.class` and other were created in `src/org/fundamentals/example`.
+1. Execute: `java -cp ./src Main2 java`. You can find more information about Java applications runner's
 command line arguments [here](https://docs.oracle.com/javase/7/docs/technotes/tools/windows/java.html).
 `-cp` is short version of `-classpath` and it _specifies a list of directories, JAR files, 
 and ZIP archives to search for class files._ Because we are using dependency from `Main2` to `Language` - we should

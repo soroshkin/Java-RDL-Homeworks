@@ -1,4 +1,4 @@
-package io.humb1t.example;
+package org.fundamentals.example;
 
 public class Main2 {
     public static void main(String[] args) {

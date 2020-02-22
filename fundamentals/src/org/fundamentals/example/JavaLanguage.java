@@ -1,4 +1,4 @@
-package io.humb1t.example;
+package org.fundamentals.example;
 
 public class JavaLanguage extends Language implements OOP, StrongTyped {
     @Override

@@ -1,4 +1,4 @@
-package io.humb1t.generics;
+package org.fundamentals.generics;
 
 public class Main3 {
     public static void main(String[] args) {

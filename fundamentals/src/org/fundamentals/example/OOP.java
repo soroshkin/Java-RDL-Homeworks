@@ -1,4 +1,4 @@
-package io.humb1t.example;
+package org.fundamentals.example;
 
 public interface OOP extends Paradigm {
     @Override

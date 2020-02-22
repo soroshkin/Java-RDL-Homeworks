@@ -1,4 +1,4 @@
-package io.humb1t;
+package org.fundamentals;
 
 public class Main {
 

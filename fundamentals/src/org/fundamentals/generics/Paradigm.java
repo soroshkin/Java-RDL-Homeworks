@@ -1,4 +1,4 @@
-package io.humb1t.generics;
+package org.fundamentals.generics;
 
 public interface Paradigm {
     String specification();

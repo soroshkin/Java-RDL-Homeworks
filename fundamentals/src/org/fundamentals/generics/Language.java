@@ -1,4 +1,4 @@
-package io.humb1t.generics;
+package org.fundamentals.generics;
 
 public class Language<P extends Paradigm, T extends Typization> implements ObjectsWithGroupingAndBehavior {
     private String name;

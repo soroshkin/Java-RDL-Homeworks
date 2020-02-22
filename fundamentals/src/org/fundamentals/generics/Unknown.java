@@ -1,4 +1,4 @@
-package io.humb1t.generics;
+package org.fundamentals.generics;
 
 public class Unknown implements Paradigm, Typization {
     @Override

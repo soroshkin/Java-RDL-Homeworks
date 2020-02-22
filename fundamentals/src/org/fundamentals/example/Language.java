@@ -1,4 +1,4 @@
-package io.humb1t.example;
+package org.fundamentals.example;
 
 public abstract class Language implements Paradigm, Typization {
     protected abstract String getName();
