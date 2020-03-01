@@ -1,7 +1,7 @@
 package org.fundamentals.homework.animals.sounds;
 
 public enum AnimalSounds {
-    MEOW("meow"), BARK("woof"), FRR("frr");
+    MEOW("meow"), BARK("woof"), FRR("frr"), CAW("caw");
     private String sound;
 
     AnimalSounds(String sound) {
