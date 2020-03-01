@@ -1,4 +1,6 @@
-package org.fundamentals.homework;
+package org.fundamentals.homework.controller;
+
+import org.fundamentals.homework.animals.*;
 
 public class Main {
     public static void main(String[] args) {

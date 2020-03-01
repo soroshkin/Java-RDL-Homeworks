@@ -1,4 +1,4 @@
-package org.fundamentals.homework;
+package org.fundamentals.homework.animals.behavior;
 
 public enum AnimalBehavior {
     HOME_GUARDER("protects home"), MICE_CATCHER("catches mice");

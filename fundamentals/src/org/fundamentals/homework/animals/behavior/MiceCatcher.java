@@ -1,4 +1,4 @@
-package org.fundamentals.homework;
+package org.fundamentals.homework.animals.behavior;
 
 public interface MiceCatcher  extends Behavior{
     @Override

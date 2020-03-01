@@ -1,8 +1,9 @@
-package org.fundamentals.homework;
+package org.fundamentals.homework.animals;
 
 public class UnknownAnimal extends Animal {
     public static final String UNKNOWN = "unknown";
     public static final String DESCRIPTION = "%s sound is %s behavior is %s";
+
     private String name;
 
     public UnknownAnimal(String name) {
