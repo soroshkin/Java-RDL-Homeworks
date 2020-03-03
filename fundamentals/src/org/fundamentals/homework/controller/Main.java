@@ -18,7 +18,6 @@ public class Main {
             case "hedgehog":
                 return new Hedgehog();
             case "crow":
-            case "raven":
                 return new Crow();
             default:
                 return new UnknownAnimal(name);
