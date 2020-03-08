@@ -13,7 +13,7 @@ public class URLCache {
     }
 
     /**
-     * Читает данные из кеша, если они есть, иначе читает из файловой системы и добавляет в кэш.
+     * Читает данные из кэша, если они есть, иначе читает из файловой системы и добавляет в кэш.
      * @param urlToSearch url, который требуется найти
      * @return возвращает найденный url
      */
@@ -22,13 +22,13 @@ public class URLCache {
             StringBuilder urlData = new StringBuilder();
             try (FileReader fileReader = new FileReader("url\\pages\\" + urlToSearch);
                  Scanner scanner = new Scanner(fileReader)) {
-
                 while (scanner.hasNext()) {
                     urlData.append(scanner.nextLine());
                 }
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
+
             return new URL(urlToSearch, urlData.toString());
         });
     }
