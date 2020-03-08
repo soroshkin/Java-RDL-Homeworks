@@ -52,17 +52,9 @@ public class Main {
         printBenchmarkResults(deleteAllElementsBenchmark(orderSet), orderSet, "delete all elements");
 
         //sixth task
-        Map<String, URL> cache = new HashMap<>();
-        for (int i = 0; i < 100; i++) {
-            URL url = new URL("http://" + i, new Object());
-            cache.put(url.getName(), url);
-        }
-
-        URL urlFromCache = cache.get("http://5");
-        if (urlFromCache != null) {
-            System.out.println(urlFromCache);
-        }
-
+        URLCache.fillCacheWithTestData();
+        String urlToSearch = "http://5";
+        System.out.println(URLCache.getFromCache(urlToSearch));
     }
 
     private static final Random RANDOM_STATUS = new Random();

@@ -4,27 +4,14 @@ import java.util.Objects;
 
 public class URL {
     private String name;
-    private Object data;
+    private String data;
 
     @Override
     public String toString() {
         return "URL{" +
                 "name='" + name + '\'' +
-                ", data=" + data +
+                ", data='" + data + '\'' +
                 '}';
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public URL(String name, Object data) {
-        this.name = name;
-        this.data = data;
     }
 
     @Override
@@ -39,5 +26,18 @@ public class URL {
     @Override
     public int hashCode() {
         return Objects.hash(name, data);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public URL(String name, String data) {
+        this.name = name;
+        this.data = data;
     }
 }
