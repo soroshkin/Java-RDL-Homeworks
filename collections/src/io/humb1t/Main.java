@@ -1,46 +1,102 @@
 package io.humb1t;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
-        Collection<String> c = Collections.EMPTY_LIST;
-        List<String> list = new ArrayList<>(c);
+        //second task
+        List<Order> ordersToFilter = new ArrayList<>();
+        getFilledList(ordersToFilter, 140);
 
-        List<Order> orders = Collections.singletonList(new Order(OrderStatus.COMPLETED));
-        orders.stream()
-                .filter(order -> order.status == OrderStatus.COMPLETED)
-                .forEach(order -> System.out.println(order.toString()));
-        for (Order order : orders) {
-            System.out.println(order.toString());
+        ordersToFilter
+                .stream()
+                .filter(order -> order.getItems() > 30)
+                .forEach(System.out::println);
+
+        //third task
+        Request request = new Request("first request");
+        BlockingQueue<Runnable> ordersQueue = new LinkedBlockingDeque<>();
+        ordersQueue.add(request);
+        ThreadPoolExecutor pooledExecutor = new ThreadPoolExecutor(1, 3, 5000, TimeUnit.MILLISECONDS, ordersQueue);
+        pooledExecutor.prestartAllCoreThreads();
+        pooledExecutor.shutdown();
+        try {
+            pooledExecutor.awaitTermination(10, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        for (Iterator<Order> iterator = orders.iterator(); iterator.hasNext();){
-            System.out.println(iterator.next().toString());
+
+        //fourth task
+        Set<Order> uniqueOrders = new HashSet<>(ordersToFilter);
+        System.out.println(uniqueOrders);
+
+        //fifth task ArrayDeque vs HashSet
+        Deque<Order> orderDeque = new ArrayDeque<>();
+        Set<Order> orderSet = new HashSet<>();
+
+        int numberOfElementsToAdd = 1_000_000;
+        printBenchmarkResults(insertElementsBenchmark(orderDeque, numberOfElementsToAdd), orderDeque, "insert elements");
+        printBenchmarkResults(insertElementsBenchmark(orderSet, numberOfElementsToAdd), orderSet, "insert elements");
+
+        printBenchmarkResults(searchElementBenchmark(orderDeque, orderDeque.size() / 2), orderDeque, "search elements");
+        printBenchmarkResults(searchElementBenchmark(orderSet, orderSet.size() / 2), orderSet, "search elements");
+
+        printBenchmarkResults(deleteAllElementsBenchmark(orderDeque), orderDeque, "delete all elements");
+        printBenchmarkResults(deleteAllElementsBenchmark(orderSet), orderSet, "delete all elements");
+
+        //sixth task
+
+
+    }
+
+    private static final Random RANDOM_STATUS = new Random();
+
+    public static void getFilledList(Collection<Order> collection, int numberOfElementsInList) {
+        OrderStatus[] orderStatuses = OrderStatus.values();
+
+        for (int i = 0; i < numberOfElementsInList; i++) {
+            collection.add(new Order(orderStatuses[RANDOM_STATUS.nextInt(orderStatuses.length)], i));
         }
-        Map<OrderStatus, List<Order>> ordersByStatus = orders.stream()
-                .collect(Collectors.groupingBy(Order::getStatus));
+    }
+
+    public static <T> long deleteAllElementsBenchmark(Collection<T> collection) {
+        return measureTime(() -> {
+            for (Iterator<T> iterator = collection.iterator(); iterator.hasNext(); ) {
+                iterator.next();
+                iterator.remove();
+            }
+        });
+    }
+
+    public static long insertElementsBenchmark(Collection<Order> collection, int numberOfElements) {
+        return measureTime(() -> {
+            for (int i = 0; i < numberOfElements; i++) {
+                collection.add(new Order(OrderStatus.COMPLETED, i));
+            }
+        });
+    }
+
+    public static long searchElementBenchmark(Collection<Order> collection, int orderItems) {
+        return measureTime(() -> {
+            for (int i = 0; i < 1000; i++) {
+                collection.contains(new Order(OrderStatus.COMPLETED, orderItems));
+            }
+        });
+    }
+
+    public static long measureTime(Action action) {
+        long beginTime = System.nanoTime();
+        action.makeAction();
+        return System.nanoTime() - beginTime;
+    }
+
+    public static void printBenchmarkResults(long nanoTime, Collection<Order> collection, String methodName) {
+        System.out.printf("%d %s %s%n", nanoTime, collection.getClass().getSimpleName(), methodName);
     }
 
 
-    public enum OrderStatus {
-        NOT_STARTED, PROCESSING, COMPLETED
-    }
-
-    public static class Order {
-        public final OrderStatus status;
-
-        public Order(OrderStatus status) {
-            this.status = status;
-        }
-
-        public OrderStatus getStatus() {
-            return status;
-        }
-    }
 }
