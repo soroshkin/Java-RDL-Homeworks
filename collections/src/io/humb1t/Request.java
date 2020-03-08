@@ -1,6 +1,6 @@
 package io.humb1t;
 
-public class Request implements Runnable{
+public class Request implements Runnable {
     private String data;
 
     public Request(String data) {
@@ -20,6 +20,11 @@ public class Request implements Runnable{
 
     @Override
     public void run() {
-        System.out.println(toString());
+        System.out.println(toString() + " " + Thread.currentThread().getName());
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

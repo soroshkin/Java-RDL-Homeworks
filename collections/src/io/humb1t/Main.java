@@ -1,10 +1,7 @@
 package io.humb1t;
 
 import java.util.*;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,17 +15,23 @@ public class Main {
                 .forEach(System.out::println);
 
         //third task
-        Request request = new Request("first request");
         BlockingQueue<Runnable> ordersQueue = new LinkedBlockingDeque<>();
-        ordersQueue.add(request);
-        ThreadPoolExecutor pooledExecutor = new ThreadPoolExecutor(1, 3, 5000, TimeUnit.MILLISECONDS, ordersQueue);
-        pooledExecutor.prestartAllCoreThreads();
-        pooledExecutor.shutdown();
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(3, 3, 10, TimeUnit.SECONDS, ordersQueue);
+        threadPoolExecutor.prestartAllCoreThreads();
+
+        new Thread(() -> {
+            for (int i = 0; i < 30; i++) {
+                threadPoolExecutor.execute(new Request(i + " request"));
+            }
+        }).start();
+
         try {
-            pooledExecutor.awaitTermination(10, TimeUnit.SECONDS);
+            threadPoolExecutor.awaitTermination(5, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        threadPoolExecutor.shutdown();
 
         //fourth task
         Set<Order> uniqueOrders = new HashSet<>(ordersToFilter);
@@ -49,7 +52,16 @@ public class Main {
         printBenchmarkResults(deleteAllElementsBenchmark(orderSet), orderSet, "delete all elements");
 
         //sixth task
+        Map<String, URL> cache = new HashMap<>();
+        for (int i = 0; i < 100; i++) {
+            URL url = new URL("http://" + i, new Object());
+            cache.put(url.getName(), url);
+        }
 
+        URL urlFromCache = cache.get("http://5");
+        if (urlFromCache != null) {
+            System.out.println(urlFromCache);
+        }
 
     }
 
@@ -97,6 +109,4 @@ public class Main {
     public static void printBenchmarkResults(long nanoTime, Collection<Order> collection, String methodName) {
         System.out.printf("%d %s %s%n", nanoTime, collection.getClass().getSimpleName(), methodName);
     }
-
-
 }
