@@ -1,7 +1,17 @@
 package io.humb1t;
 
+import io.humb1t.cache.URLCache;
+import io.humb1t.orders.Action;
+import io.humb1t.orders.Order;
+import io.humb1t.orders.OrderStatus;
+import io.humb1t.request.Request;
+
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -26,7 +36,7 @@ public class Main {
         }).start();
 
         try {
-            threadPoolExecutor.awaitTermination(5, TimeUnit.SECONDS);
+            threadPoolExecutor.awaitTermination(1, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -53,8 +63,16 @@ public class Main {
 
         //sixth task
         URLCache.fillCacheWithTestData();
-        String urlToSearch = "http://5";
-        System.out.println(URLCache.getFromCache(urlToSearch));
+        System.out.println(URLCache.getCacheSize());
+
+        String urlToSearch = "webpage-1";
+        URLCache.testCache(urlToSearch);
+
+        urlToSearch = "hello";
+        URLCache.testCache(urlToSearch);
+
+        urlToSearch = "null page";
+        URLCache.testCache(urlToSearch);
     }
 
     private static final Random RANDOM_STATUS = new Random();

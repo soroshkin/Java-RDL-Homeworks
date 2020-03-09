@@ -1,4 +1,4 @@
-package io.humb1t;
+package io.humb1t.cache;
 
 import java.util.Objects;
 
