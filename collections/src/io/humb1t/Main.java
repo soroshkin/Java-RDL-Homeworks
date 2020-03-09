@@ -29,16 +29,8 @@ public class Main {
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(3, 3, 10, TimeUnit.SECONDS, ordersQueue);
         threadPoolExecutor.prestartAllCoreThreads();
 
-        new Thread(() -> {
-            for (int i = 0; i < 30; i++) {
-                threadPoolExecutor.execute(new Request(i + " request"));
-            }
-        }).start();
-
-        try {
-            threadPoolExecutor.awaitTermination(1, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        for (int i = 0; i < 30; i++) {
+            threadPoolExecutor.execute(new Request(i + " request"));
         }
 
         threadPoolExecutor.shutdown();
