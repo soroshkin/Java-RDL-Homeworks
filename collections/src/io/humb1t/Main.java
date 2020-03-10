@@ -1,9 +1,7 @@
 package io.humb1t;
 
 import io.humb1t.cache.URLCache;
-import io.humb1t.orders.Action;
 import io.humb1t.orders.Order;
-import io.humb1t.orders.OrderStatus;
 import io.humb1t.request.Request;
 
 import java.util.*;
@@ -12,12 +10,15 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static io.humb1t.CollectionBenchmark.MethodNames.*;
+
 
 public class Main {
     public static void main(String[] args) {
         //second task
         List<Order> ordersToFilter = new ArrayList<>();
-        getFilledList(ordersToFilter, 140);
+        CollectionBenchmark benchmark = new CollectionBenchmark();
+        benchmark.getFilledList(ordersToFilter, 140);
 
         ordersToFilter
                 .stream()
@@ -43,15 +44,16 @@ public class Main {
         Deque<Order> orderDeque = new ArrayDeque<>();
         Set<Order> orderSet = new HashSet<>();
 
+
         int numberOfElementsToAdd = 1_000_000;
-        printBenchmarkResults(insertElementsBenchmark(orderDeque, numberOfElementsToAdd), orderDeque, "insert elements");
-        printBenchmarkResults(insertElementsBenchmark(orderSet, numberOfElementsToAdd), orderSet, "insert elements");
+        benchmark.printBenchmarkResults(benchmark.insertElementsBenchmark(orderDeque, numberOfElementsToAdd), orderDeque, INSERT.getName());
+        benchmark.printBenchmarkResults(benchmark.insertElementsBenchmark(orderSet, numberOfElementsToAdd), orderSet, INSERT.getName());
 
-        printBenchmarkResults(searchElementBenchmark(orderDeque, orderDeque.size() / 2), orderDeque, "search elements");
-        printBenchmarkResults(searchElementBenchmark(orderSet, orderSet.size() / 2), orderSet, "search elements");
+        benchmark.printBenchmarkResults(benchmark.searchElementBenchmark(orderDeque, orderDeque.size() / 2), orderDeque, SEARCH.getName());
+        benchmark.printBenchmarkResults(benchmark.searchElementBenchmark(orderSet, orderSet.size() / 2), orderSet, SEARCH.getName());
 
-        printBenchmarkResults(deleteAllElementsBenchmark(orderDeque), orderDeque, "delete all elements");
-        printBenchmarkResults(deleteAllElementsBenchmark(orderSet), orderSet, "delete all elements");
+        benchmark.printBenchmarkResults(benchmark.deleteAllElementsBenchmark(orderDeque), orderDeque, DELETE.getName());
+        benchmark.printBenchmarkResults(benchmark.deleteAllElementsBenchmark(orderSet), orderSet, DELETE.getName());
 
         //sixth task
         URLCache.fillCacheWithTestData();
@@ -65,50 +67,5 @@ public class Main {
 
         urlToSearch = "null page";
         URLCache.testCache(urlToSearch);
-    }
-
-    private static final Random RANDOM_STATUS = new Random();
-
-    public static void getFilledList(Collection<Order> collection, int numberOfElementsInList) {
-        OrderStatus[] orderStatuses = OrderStatus.values();
-
-        for (int i = 0; i < numberOfElementsInList; i++) {
-            collection.add(new Order(orderStatuses[RANDOM_STATUS.nextInt(orderStatuses.length)], i));
-        }
-    }
-
-    public static <T> long deleteAllElementsBenchmark(Collection<T> collection) {
-        return measureTime(() -> {
-            for (Iterator<T> iterator = collection.iterator(); iterator.hasNext(); ) {
-                iterator.next();
-                iterator.remove();
-            }
-        });
-    }
-
-    public static long insertElementsBenchmark(Collection<Order> collection, int numberOfElements) {
-        return measureTime(() -> {
-            for (int i = 0; i < numberOfElements; i++) {
-                collection.add(new Order(OrderStatus.COMPLETED, i));
-            }
-        });
-    }
-
-    public static long searchElementBenchmark(Collection<Order> collection, int orderItems) {
-        return measureTime(() -> {
-            for (int i = 0; i < 1000; i++) {
-                collection.contains(new Order(OrderStatus.COMPLETED, orderItems));
-            }
-        });
-    }
-
-    public static long measureTime(Action action) {
-        long beginTime = System.nanoTime();
-        action.makeAction();
-        return System.nanoTime() - beginTime;
-    }
-
-    public static void printBenchmarkResults(long nanoTime, Collection<Order> collection, String methodName) {
-        System.out.printf("%d %s %s%n", nanoTime, collection.getClass().getSimpleName(), methodName);
     }
 }
