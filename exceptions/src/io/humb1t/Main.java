@@ -1,5 +1,7 @@
 package io.humb1t;
 
+import io.humb1t.library.Library;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,16 +19,41 @@ public class Main {
             throw new RuntimeException(e);
         }
         try (FileInputStream fileInputStream = new FileInputStream(args[0])) {
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        /**
+         * second task
+         */
+        try (AutoCloseableTest autoCloseableTest = new AutoCloseableTest()) {
+            autoCloseableTest.printMessage("reading resource...");
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+
+        /**
+         * third task
+         * Explanation: class fields are initialized with default values or with values passed as parameters. But when
+         * exception is thrown in constructor, creation of new instance finishes. Half-created class is allocated in heap,
+         * but reference to it is not returned. So the reference's value is undefined (it's not null) and debugger doesn't see it
+         * (Cannot find local variable library). Partially initialized object will be collected by garbage collector.
+         */
+        Library library;
+        try {
+            library = new Library();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * first task
+     */
     public static class LifeCycleAction {
-        public void execute() throws LifeCycleActionExecutionException, AccessDeniedException {
+        public void execute() throws LifeCycleActionExecutionException, AccessDeniedException, ExecutionException {
             throw new LifeCycleActionExecutionException();
         }
     }

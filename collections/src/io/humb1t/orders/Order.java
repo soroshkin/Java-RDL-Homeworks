@@ -6,7 +6,6 @@ public class Order {
     public final OrderStatus status;
     private int items;
 
-
     public Order(OrderStatus status) {
         this.status = status;
     }

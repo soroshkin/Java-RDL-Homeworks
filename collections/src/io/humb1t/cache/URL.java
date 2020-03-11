@@ -6,6 +6,19 @@ public class URL {
     private String name;
     private String data;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public URL(String name, String data) {
+        this.name = name;
+        this.data = data;
+    }
+
     @Override
     public String toString() {
         return "URL{" +
@@ -26,18 +39,5 @@ public class URL {
     @Override
     public int hashCode() {
         return Objects.hash(name, data);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public URL(String name, String data) {
-        this.name = name;
-        this.data = data;
     }
 }
