@@ -18,11 +18,11 @@ public class Main {
         //second task
         List<Order> ordersToFilter = new ArrayList<>();
         CollectionBenchmark benchmark = new CollectionBenchmark();
-        benchmark.getFilledList(ordersToFilter, 140);
+        benchmark.getFilledList(ordersToFilter, 30);
 
         ordersToFilter
                 .stream()
-                .filter(order -> order.getItems() > 30)
+                .filter(order -> order.isEqualOrLessItems(5))
                 .forEach(System.out::println);
 
         //third task
@@ -30,7 +30,7 @@ public class Main {
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(3, 3, 10, TimeUnit.SECONDS, ordersQueue);
         threadPoolExecutor.prestartAllCoreThreads();
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 10; i++) {
             threadPoolExecutor.execute(new Request(i + " request"));
         }
 
