@@ -4,31 +4,27 @@ import java.util.Objects;
 
 public class Order {
     public final OrderStatus status;
-    private int items;
+    private int numberOfItemsInOrder;
 
     public Order(OrderStatus status) {
         this.status = status;
     }
 
-    public Order(OrderStatus status, int items) {
+    public Order(OrderStatus status, int numberOfItemsInOrder) {
         this.status = status;
-        this.items = items;
+        this.numberOfItemsInOrder = numberOfItemsInOrder;
     }
 
     public OrderStatus getStatus() {
         return status;
     }
 
-    public int getItems() {
-        return items;
+    public int getNumberOfItemsInOrder() {
+        return numberOfItemsInOrder;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "status=" + status +
-                ", items=" + items +
-                '}';
+    public boolean isEqualOrLessItems(int items){
+        return this.numberOfItemsInOrder <= items;
     }
 
     @Override
@@ -36,12 +32,20 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return items == order.items &&
+        return numberOfItemsInOrder == order.numberOfItemsInOrder &&
                 status == order.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(status, items);
+        return Objects.hash(status, numberOfItemsInOrder);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "status=" + status +
+                ", items=" + numberOfItemsInOrder +
+                '}';
     }
 }
