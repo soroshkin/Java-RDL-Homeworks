@@ -17,9 +17,6 @@ public class URLCache {
         return cache;
     }
 
-    private URLCache() {
-    }
-
     /**
      * Читает данные из кэша, если они есть, иначе читает из файловой системы и добавляет в кэш.
      *

@@ -44,28 +44,28 @@ public class Main {
         Deque<Order> orderDeque = new ArrayDeque<>();
         Set<Order> orderSet = new HashSet<>();
 
-
         int numberOfElementsToAdd = 1_000_000;
-        benchmark.printBenchmarkResults(benchmark.insertElementsBenchmark(orderDeque, numberOfElementsToAdd), orderDeque, INSERT.getName());
-        benchmark.printBenchmarkResults(benchmark.insertElementsBenchmark(orderSet, numberOfElementsToAdd), orderSet, INSERT.getName());
+        benchmark.printResults(benchmark.insertElements(orderDeque, numberOfElementsToAdd), orderDeque, INSERT.getName());
+        benchmark.printResults(benchmark.insertElements(orderSet, numberOfElementsToAdd), orderSet, INSERT.getName());
 
-        benchmark.printBenchmarkResults(benchmark.searchElementBenchmark(orderDeque, orderDeque.size() / 2), orderDeque, SEARCH.getName());
-        benchmark.printBenchmarkResults(benchmark.searchElementBenchmark(orderSet, orderSet.size() / 2), orderSet, SEARCH.getName());
+        benchmark.printResults(benchmark.searchElement(orderDeque, orderDeque.size() / 2), orderDeque, SEARCH.getName());
+        benchmark.printResults(benchmark.searchElement(orderSet, orderSet.size() / 2), orderSet, SEARCH.getName());
 
-        benchmark.printBenchmarkResults(benchmark.deleteAllElementsBenchmark(orderDeque), orderDeque, DELETE.getName());
-        benchmark.printBenchmarkResults(benchmark.deleteAllElementsBenchmark(orderSet), orderSet, DELETE.getName());
+        benchmark.printResults(benchmark.deleteAllElements(orderDeque), orderDeque, DELETE.getName());
+        benchmark.printResults(benchmark.deleteAllElements(orderSet), orderSet, DELETE.getName());
 
         //sixth task
-        URLCache.fillCacheWithTestData();
-        System.out.println(URLCache.getCacheSize());
+        URLCache cache = new URLCache();
+        cache.fillCacheWithTestData();
+        System.out.println(cache.getCacheSize());
 
         String urlToSearch = "webpage-1";
-        URLCache.testCache(urlToSearch);
+        cache.testCache(urlToSearch);
 
         urlToSearch = "hello";
-        URLCache.testCache(urlToSearch);
+        cache.testCache(urlToSearch);
 
         urlToSearch = "null page";
-        URLCache.testCache(urlToSearch);
+        cache.testCache(urlToSearch);
     }
 }

@@ -32,7 +32,7 @@ public class CollectionBenchmark {
         }
     }
 
-    public <T> long deleteAllElementsBenchmark(Collection<T> collection) {
+    public <T> long deleteAllElements(Collection<T> collection) {
         return measureTime(() -> {
             for (Iterator<T> iterator = collection.iterator(); iterator.hasNext(); ) {
                 iterator.next();
@@ -41,7 +41,7 @@ public class CollectionBenchmark {
         });
     }
 
-    public long insertElementsBenchmark(Collection<Order> collection, int numberOfElements) {
+    public long insertElements(Collection<Order> collection, int numberOfElements) {
         return measureTime(() -> {
             for (int i = 0; i < numberOfElements; i++) {
                 collection.add(new Order(OrderStatus.COMPLETED, i));
@@ -49,7 +49,7 @@ public class CollectionBenchmark {
         });
     }
 
-    public long searchElementBenchmark(Collection<Order> collection, int orderItems) {
+    public long searchElement(Collection<Order> collection, int orderItems) {
         return measureTime(() -> {
             for (int i = 0; i < 1000; i++) {
                 collection.contains(new Order(OrderStatus.COMPLETED, orderItems));
@@ -63,7 +63,7 @@ public class CollectionBenchmark {
         return System.nanoTime() - beginTime;
     }
 
-    public void printBenchmarkResults(long nanoTime, Collection<Order> collection, String methodName) {
+    public void printResults(long nanoTime, Collection<Order> collection, String methodName) {
         System.out.printf("%d %s %s%n", nanoTime, collection.getClass().getSimpleName(), methodName);
     }
 }
