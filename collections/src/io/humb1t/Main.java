@@ -55,9 +55,9 @@ public class Main {
         benchmark.printResults(benchmark.deleteAllElements(orderSet), orderSet, DELETE.getName());
 
         //sixth task
-        URLCache cache = new URLCache();
+        URLCache cache = new URLCache(100);
         cache.fillCacheWithTestData();
-        System.out.println(cache.getCacheSize());
+        cache.printCacheSize();
 
         String urlToSearch = "webpage-1";
         cache.testCache(urlToSearch);
