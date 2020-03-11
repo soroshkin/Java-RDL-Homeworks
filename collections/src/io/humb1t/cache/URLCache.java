@@ -10,10 +10,10 @@ import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class URLCache {
-    private static Map<String, URL> cache = new ConcurrentHashMap<>();
-    private static Path filePath = Paths.get("web\\pages");
+    private  Map<String, URL> cache = new ConcurrentHashMap<>();
+    private  Path filePath = Paths.get("web\\pages");
 
-    public static Map<String, URL> getCache() {
+    public Map<String, URL> getCache() {
         return cache;
     }
 
@@ -26,7 +26,7 @@ public class URLCache {
      * @param urlToSearch url, который требуется найти
      * @return возвращает найденный url или null, если ни в кэше, ни в файловой системе его нет
      */
-    public static URL getFromCache(String urlToSearch) {
+    public URL getFromCache(String urlToSearch) {
         return cache.computeIfAbsent(urlToSearch, value -> {
             StringBuilder urlData = new StringBuilder();
             try (FileReader fileReader = new FileReader(filePath + File.separator + urlToSearch);
@@ -46,19 +46,19 @@ public class URLCache {
     /**
      * Заполняет кэш тестовыми данными
      */
-    public static void fillCacheWithTestData() {
+    public void fillCacheWithTestData() {
         for (int i = 0; i < 5; i++) {
             URL url = new URL("webpage-" + i, "data-" + i);
             cache.put(url.getName(), url);
         }
     }
 
-    public static String getCacheSize() {
-        return "cache size is " + URLCache.getCache().size();
+    public String getCacheSize() {
+        return "cache size is " + getCache().size();
     }
 
-    public static void testCache(String urlToSearch) {
-        System.out.println("search in cache or filesystem... result: " + URLCache.getFromCache(urlToSearch));
-        System.out.println(URLCache.getCacheSize());
+    public void testCache(String urlToSearch) {
+        System.out.println("search in cache or filesystem... result: " + getFromCache(urlToSearch));
+        System.out.println(getCacheSize());
     }
 }
