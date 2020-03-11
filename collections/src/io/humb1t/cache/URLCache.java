@@ -23,6 +23,12 @@ public class URLCache {
             }
         };
     }
+    /*
+    Part 1. Task 2
+    Using Optional as method parameter is a bad practice. We will have to check whether value in Optional is null or not, this is
+    contra productive. Needing to pack variable into Optional is suboptimal to compiler, because it does unnecessary wrapping.
+    Simple checking for nulls is less costly compared to using Optional.
+     */
 
     /**
      * Читает данные из кэша, если они есть, иначе читает из файловой системы и добавляет в кэш.

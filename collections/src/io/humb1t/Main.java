@@ -15,7 +15,7 @@ import static io.humb1t.CollectionBenchmark.MethodNames.*;
 
 public class Main {
     public static void main(String[] args) {
-        //second task
+        //Part 2. Task 2
         List<Order> ordersToFilter = new ArrayList<>();
         CollectionBenchmark benchmark = new CollectionBenchmark();
         benchmark.getFilledList(ordersToFilter, 30);
