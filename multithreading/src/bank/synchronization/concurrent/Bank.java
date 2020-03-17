@@ -1,4 +1,6 @@
-package bank;
+package bank.synchronization.concurrent;
+
+import bank.NotEnoughMoneyException;
 
 public class Bank {
     private int moneyAmount;
@@ -11,12 +13,12 @@ public class Bank {
         return moneyAmount;
     }
 
-    public void transferMoney(int amount) {
+    public void transferMoney(int amount, long bankUserId) {
         if (!hasEnoughMoney(amount)) {
             throw new NotEnoughMoneyException("not enough money");
         }
         moneyAmount -= amount;
-        System.out.println(amount + " dollars transferred by user-" + Thread.currentThread().getId() + " " + moneyAmount + " dollars left in Bank");
+        System.out.println(amount + " dollars transferred by user-" + bankUserId + " " + moneyAmount + " dollars left in Bank");
     }
 
     public boolean hasEnoughMoney(int amount) {
