@@ -8,25 +8,32 @@ public class Dinner {
     private static final int NUMBER_OF_FORKS = NUMBER_OF_PHILOSOPHERS;
 
     public static void main(String[] args) {
-        List<Philosopher> philosopherList = new ArrayList<>(5);
-        for (int i = 0; i < NUMBER_OF_PHILOSOPHERS; i++) {
-            philosopherList.add(new Philosopher("philosopher-" + i));
-        }
-
+        Fork[] forks = new Fork[NUMBER_OF_FORKS];
         for (int i = 0; i < NUMBER_OF_FORKS; i++) {
-            Fork fork = new Fork();
-            if (i != NUMBER_OF_FORKS - 1) {
-                philosopherList.get(i).setRightFork(fork);
-                philosopherList.get(i + 1).setLeftFork(fork);
-            } else {
-                philosopherList.get(0).setLeftFork(fork);
-                philosopherList.get(i).setRightFork(fork);
-            }
+            forks[i] = new Fork("fork #" + i);
         }
 
-        for (Philosopher p:philosopherList
-             ) {
-            new Thread(p).start();
+        List<Thread> threads = new ArrayList<>(NUMBER_OF_PHILOSOPHERS);
+        for (int i = 0; i < NUMBER_OF_FORKS; i++) {
+            Philosopher philosopher = new Philosopher("philosopher #" + i);
+
+            philosopher.setLeftFork(forks[i]);
+            philosopher.setRightFork(forks[(i+1) % NUMBER_OF_FORKS]);
+
+            Thread thread = new Thread(philosopher);
+            threads.add(thread);
+            thread.start();
         }
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+//        for (Thread t : threads) {
+//            t.interrupt();
+//        }
+
     }
 }

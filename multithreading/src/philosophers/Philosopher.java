@@ -1,25 +1,9 @@
 package philosophers;
 
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 public class Philosopher implements Runnable {
     private String name;
     private Fork leftFork;
     private Fork rightFork;
-    private static final Lock lock = new ReentrantLock();
-    Condition leftForkCondition = lock.newCondition();
-    Condition rightForkCondition = lock.newCondition();
-
-    @Override
-    public String toString() {
-        return "Philosopher{" +
-                "name='" + name + '\'' +
-                ", leftFork=" + leftFork +
-                ", rightFork=" + rightFork +
-                '}';
-    }
 
     public void setLeftFork(Fork leftFork) {
         this.leftFork = leftFork;
@@ -33,25 +17,54 @@ public class Philosopher implements Runnable {
         this.name = name;
     }
 
-    public boolean acquireLeftFork() {
-        return true;
+    @Override
+    public void run() {
+        while (!Thread.currentThread().isInterrupted()) {
+            if (hasTakenForks()) {
+                eats();
+                leftFork.putBackFork();
+                rightFork.putBackFork();
+            } else {
+                thinks();
+            }
+        }
     }
 
-    public boolean acquireRightFork() {
-        return true;
+    public boolean hasTakenForks() {
+        if (leftFork.takeFork()) {
+            System.out.println(name + " takes left " + leftFork.getName());
+            if (rightFork.takeFork()) {
+                System.out.println(name + " takes right " + rightFork.getName());
+                return true;
+            } else {
+                System.out.println(name + " couldn't take right fork");
+                leftFork.putBackFork();
+            }
+
+        }
+        System.out.println(name + " couldn't take forks");
+        return false;
     }
 
     public void thinks() {
-        System.out.println(name + " thinks");
+        //чтобы  в консоли удобнее было находить метод
+        System.out.println(name + " ====================== thinks ==================================");
     }
 
     public void eats() {
-        System.out.println(name + " eats");
+        //чтобы  в консоли удобнее было находить метод
+        System.out.println(name + " eats !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
 
-    @Override
-    public void run() {
 
+
+    @Override
+    public String toString() {
+        return "Philosopher{" +
+                "name='" + name + '\'' +
+                ", leftFork=" + leftFork.getName() +
+                ", rightFork=" + rightFork.getName() +
+                '}';
     }
 }
