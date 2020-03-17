@@ -1,8 +1,14 @@
 package philosophers;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class Fork {
     private String name;
-    private boolean isTaken;
+    private final ReentrantLock lock = new ReentrantLock();
+
+    public ReentrantLock getLock() {
+        return lock;
+    }
 
     public String getName() {
         return name;
@@ -14,21 +20,15 @@ public class Fork {
 
     /**
      * Tries to take fork
-     * @return true if  fork is taken
      */
-    public boolean takeFork() {
-        if (isTaken){
-            return false;
-        }
-        return isTaken = true;
+    public void take() {
+        lock.lock();
     }
-
 
     /**
      * Releases the lock of the fork
      */
-    public void putBackFork() {
-        isTaken = false;
-        System.out.println(name + " has been put back");
+    public void putBack() {
+        lock.unlock();
     }
 }

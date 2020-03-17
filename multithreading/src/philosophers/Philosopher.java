@@ -1,9 +1,17 @@
 package philosophers;
 
+import java.util.concurrent.Semaphore;
+
 public class Philosopher implements Runnable {
+    private final Semaphore semaphore;
     private String name;
     private Fork leftFork;
     private Fork rightFork;
+
+    public Philosopher(String name, Semaphore semaphore) {
+        this.semaphore = semaphore;
+        this.name = name;
+    }
 
     public void setLeftFork(Fork leftFork) {
         this.leftFork = leftFork;
@@ -13,51 +21,54 @@ public class Philosopher implements Runnable {
         this.rightFork = rightFork;
     }
 
-    public Philosopher(String name) {
-        this.name = name;
-    }
-
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
-            if (hasTakenForks()) {
-                eats();
-                leftFork.putBackFork();
-                rightFork.putBackFork();
-            } else {
-                thinks();
+            try {
+                semaphore.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                break;
             }
+
+            thinks();
+            getForks();
+            if (leftFork.getLock().isHeldByCurrentThread() && rightFork.getLock().isHeldByCurrentThread()) {
+                eats();
+            }
+
+            if (leftFork.getLock().isHeldByCurrentThread()) {
+                leftFork.putBack();
+                System.out.println(name + " puts " + leftFork.getName());
+            }
+            if (rightFork.getLock().isHeldByCurrentThread()) {
+                rightFork.putBack();
+                System.out.println(name + " puts " + rightFork.getName());
+            }
+            semaphore.release();
+
+            //I used yield() for quicker switches between threads
+            Thread.yield();
         }
     }
 
-    public boolean hasTakenForks() {
-        if (leftFork.takeFork()) {
-            System.out.println(name + " takes left " + leftFork.getName());
-            if (rightFork.takeFork()) {
-                System.out.println(name + " takes right " + rightFork.getName());
-                return true;
-            } else {
-                System.out.println(name + " couldn't take right fork");
-                leftFork.putBackFork();
-            }
-
-        }
-        System.out.println(name + " couldn't take forks");
-        return false;
+    public void getForks() {
+        leftFork.take();
+        System.out.println(name + " takes " + leftFork.getName());
+        rightFork.take();
+        System.out.println(name + " takes " + rightFork.getName());
     }
 
     public void thinks() {
         //чтобы  в консоли удобнее было находить метод
-        System.out.println(name + " ====================== thinks ==================================");
+        System.out.println(name + " thinks");
+
     }
 
     public void eats() {
         //чтобы  в консоли удобнее было находить метод
-        System.out.println(name + " eats !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(name + " eats");
     }
-
-
-
 
     @Override
     public String toString() {
