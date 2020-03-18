@@ -28,16 +28,5 @@ public class Dinner {
             threads.add(thread);
             thread.start();
         }
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        for (Thread t : threads) {
-            t.interrupt();
-        }
-
     }
 }
