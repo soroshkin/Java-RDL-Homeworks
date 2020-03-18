@@ -13,11 +13,21 @@ public class Producer implements Runnable {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                System.out.println("get " + queue.take());
+                Message message = new Message("message #" + queue.size());
+                System.out.println("put " + message);
+                queue.put(message);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 break;
             }
+        }
+    }
+
+    public void addOneMessage(Message message){
+        try {
+            queue.put(message);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

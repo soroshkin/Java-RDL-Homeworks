@@ -20,14 +20,14 @@ public class BankUser implements Runnable {
             synchronized (bank) {
                 moneyAmount = randomMoneyAmount.nextInt(MAX_MONEY_PER_TRANSFER) + 1;
                 if (bank.hasEnoughMoney(moneyAmount)) {
-                    //вызываю sleep, чтобы спровоцировать ошибку
+                    //sleep, чтобы спровоцировать ошибку
                     try {
                         Thread.sleep(TIME_TO_SLEEP);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     bank.transferMoney(moneyAmount, Thread.currentThread().getId());
-                    //вызываю yield, чтобы дать поработать другим нитям
+                    //yield, чтобы чаще переключаться на другие нити
                     Thread.yield();
                 }
             }

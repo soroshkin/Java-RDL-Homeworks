@@ -11,12 +11,9 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
-        long messageNumber = 0;
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                Message message = new Message("message #" + messageNumber++);
-                System.out.println("put " + message);
-                queue.put(message);
+                System.out.println("get " + queue.take());
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 break;

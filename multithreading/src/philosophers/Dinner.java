@@ -23,7 +23,6 @@ public class Dinner {
 
             philosopher.setLeftFork(forks[i]);
             philosopher.setRightFork(forks[(i + 1) % NUMBER_OF_FORKS]);
-            System.out.println(philosopher);
 
             Thread thread = new Thread(philosopher);
             threads.add(thread);

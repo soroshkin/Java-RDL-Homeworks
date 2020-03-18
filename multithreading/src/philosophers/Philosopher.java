@@ -47,7 +47,7 @@ public class Philosopher implements Runnable {
             }
             semaphore.release();
 
-            //I used yield() for quicker switches between threads
+            //yield() for quicker switches between threads
             Thread.yield();
         }
     }
@@ -60,13 +60,11 @@ public class Philosopher implements Runnable {
     }
 
     public void thinks() {
-        //чтобы  в консоли удобнее было находить метод
         System.out.println(name + " thinks");
 
     }
 
     public void eats() {
-        //чтобы  в консоли удобнее было находить метод
         System.out.println(name + " eats");
     }
 

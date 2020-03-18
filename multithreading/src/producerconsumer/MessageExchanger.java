@@ -8,13 +8,13 @@ public class MessageExchanger {
         Consumer consumer = new Consumer(queue);
         Producer producer = new Producer(queue);
 
-        ExecutorService executor = Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(6);
 
         executor.submit(producer);
         executor.submit(consumer);
 
         try {
-            Thread.sleep(30);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
