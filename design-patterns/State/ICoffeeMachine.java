@@ -1,13 +1,21 @@
 package State;
 
-public interface ICoffeeMachine {
-    void Deposit(int MoneyAmount); // принять деньги
-    void PrepareCoffee(); // приготовить кофе
-    void DeliverCoffee(); // выдать кофе клиенту
-    void GiveChange(int MoneyAmount); // отдать сдачу
+import State.states.CoffeeMachineState;
 
-    void dispatchError(); // обработчик ошибок (например написать сообщение об ошибке клиенту)
+public interface ICoffeeMachine {
+    void changeState(CoffeeMachineState state);
+
+    void deposit(int moneyAmount); // принять деньги
+
+    void prepareCoffee(); // приготовить кофе
+
+    void deliverCoffee(); // выдать кофе клиенту
+
+    void giveChange(int moneyAmount); // отдать сдачу
+
+    void dispatchError(String message); // обработчик ошибок (например написать сообщение об ошибке клиенту)
 
     void init(); // инициализация
+
     void stop(); // остановить и больше не принимать команды
 }

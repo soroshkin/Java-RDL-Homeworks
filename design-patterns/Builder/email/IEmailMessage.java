@@ -1,9 +1,7 @@
-package Builder;
-
-import java.util.List;
+package Builder.email;
 
 public interface IEmailMessage {
     void send(); // отправить письмо
     IEmailMessage receive(); // получить письмо
-    IEmailMessage create(IRecepient sender, IRecepient... recepient); // создать письмо
+
 }
