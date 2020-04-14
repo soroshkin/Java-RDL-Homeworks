@@ -57,8 +57,8 @@ public class Constants {
             "JOIN departments ON departments.id=employees.department WHERE departments.name = 'IT' ORDER BY employees.name";
     public static final String SQL_QUERY_LIST_OF_EMPLOYEES_SALARY_IS_BIGGER = "SELECT employees.name, departments.name, employees.salary " +
             "FROM employees JOIN departments ON employees.department = departments.id " +
-            "WHERE employees.salary > (SELECT employees.salary FROM employees where employees.name = '%s')";
-    public static final String SQL_QUERY_GET_SALARY = "SELECT name, salary, manager FROM return_salaries(%d)";
+            "WHERE employees.salary > (SELECT employees.salary FROM employees where employees.name = ?)";
+    public static final String SQL_QUERY_GET_SALARY = "SELECT name, salary, manager FROM return_salaries(?)";
 
     public static final String EMPLOYEE_OR_MANAGER_MESSAGE = "Если ввели ФИО рядового сотрудника, то вывести только его зарплату. Если ввели начальника подразделения - вывести список всех его подчинённых с указанием зарплаты и сортировкой по ФИО";
     public static final String LIST_OF_EMPLOYEES_BY_SALARY_MESSAGE = "Список сотрудников указанного подразделения с сортировкой по зарплате";
