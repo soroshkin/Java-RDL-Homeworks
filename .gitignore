@@ -2,8 +2,8 @@
 /workspace.xml
 *.class
 *.iml
-!11-Java-RDL-Homeworks.iml
 .idea/
 *.docx
 out/
-
+target/*
+*.kotlin_module
