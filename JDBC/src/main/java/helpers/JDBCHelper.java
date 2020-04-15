@@ -86,42 +86,25 @@ public class JDBCHelper {
     }
 
     public static void printQueriesResultWithParameter(Connection connection, String query, String parameter, String message) {
-        ResultSet resultSet = null;
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, parameter);
             statement.execute();
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             printResult(resultSet, message);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     public static void printGetSalaryFunctionResult(Connection connection, String query, int employeeId, String message) {
-        ResultSet resultSet = null;
         try (CallableStatement statement = connection.prepareCall(query)) {
             statement.setInt(1, employeeId);
             statement.execute();
-            resultSet = statement.getResultSet();
+            ResultSet resultSet = statement.getResultSet();
             printResult(resultSet, message);
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
